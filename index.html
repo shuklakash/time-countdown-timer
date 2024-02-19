@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: hsl(74, 31%, 67%);
+}
+h1{
+  padding: 15px;
+  outline: 0;
+  font-size: 25px;
+  color: rgb(0, 0, 0);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#fdde5c),
+    color-stop(#f8ab5e),
+    color-stop(#f56a62),
+    color-stop(#a176c8),
+    color-stop(#759beb),
+    color-stop(#65beb3),
+    to(#70db96)
+  );
+  background: linear-gradient(
+    to right,
+    #fdde5c,
+    #f8ab5e,
+    #f56a62,
+    #a176c8,
+    #759beb,
+    #65beb3,
+    #70db96
+  );
+  border-radius: 30px;
+  border: 0;
+  box-shadow: none;
+}
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #dae2e0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 5em;
+  cursor: pointer;
+  outline: none;
+  font-size: 18px;
+  -webkit-transform: translate(0);
+  transform: translate(0);
+  background-image: linear-gradient(45deg, #8fabe9, #e5e0e6);
+  padding: 0.7em 2em;
+  border-radius: 65px;
+  box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.438);
+  transition: box-shadow 0.25s;
+  color: rgb(19, 18, 18);
+}
+input:hover{
+    background-image: linear-gradient(-45deg, #4568dc, #b06ab3);
+  box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
+}
+
+
+button {
+    width: 160px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+button:hover {
+    background-position: 100% 0;
+  transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+button:focus {
+  outline: none;
+}
+button {
+  background-image: linear-gradient(
+    to right,
+    #ed6ea0,
+    #ec8c69,
+    #f7186a,
+    #fbb03b
+  );
+  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+
+#countdown {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+label{
+  background-color: #e7a0e1;
+  color: hwb(0 9% 90%);
+  font-size:1.2em;
+  font-weight: 50;
+  position: relative;
+  outline: none;
+  border-radius: 50px;
+  display:flex ;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 600px;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        <label for="datetime">Set Target Date and Time:</label>
+        <input type="datetime-local" id="datetime" required>
+        <button onclick="startCountdown()">Start Countdown</button>
+        <button onclick="stopCountdown()">Stop Countdown</button>
+        <div id="countdown"></div>
+    </div>
+    <script>
+        function startCountdown() {
+        const targetDate = new Date(document.getElementById('datetime').value).getTime();
+    
+        if (isNaN(targetDate)) {
+            alert('Please select a valid date and time.');
+            return;
+        }
+    
+        const countdownElement = document.getElementById('countdown');
+    
+        const updateCountdown = () => {
+            const currentDate = new Date().getTime();
+            const timeDifference = targetDate - currentDate;
+    
+            if (timeDifference <= 0) {
+                countdownElement.innerHTML = "Event has started!";
+            } 
+            else {
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        };
+        countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+}
+
+function stopCountdown() {
+    clearInterval(countdownInterval);
+}
+</script>
+</body>
+</html>
